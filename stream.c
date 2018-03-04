@@ -10,7 +10,7 @@ ssize_t fdStreamEncode(int fdIn, int fdOut, char* key, ssize_t keySize)
     {
         ssize_t readBufferSize = read(fdIn, buffer, (ssize_t)BUFFERSIZE_STACK);
         // EOF/Error
-        if (readBufferSize <= 0)
+        if ( readBufferSize <= 0 )
             break;
 
         keyOffset = xorEncode(buffer, readBufferSize, key, keySize, keyOffset);
