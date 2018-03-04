@@ -1,7 +1,4 @@
 #include "xor.h"
-#ifdef _XOR_H_
-#warning faq
-#endif
 
 ssize_t xorEncode(char* buffer, ssize_t bufferSize, char* key, ssize_t keySize, ssize_t keyOffset)
 {
