@@ -2,7 +2,7 @@
 XOR Encoder with experimental streaming support
 
 ## Build
-`make`
+`CFLAGS="-O3" make`
 
 ## Usage
 `./XORStreamer [XORKey]`
