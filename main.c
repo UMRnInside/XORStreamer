@@ -17,6 +17,6 @@ int main(int argc, char** argv)
     else
         key = DEFAULT_KEY;
     
-    fdStreamEncode(0, 1, key, strlen(key));
-    return 0;
+    ssize_t errorCode = fdStreamEncode(0, 1, key, strlen(key));
+    return (int)errorCode;
 }

@@ -15,9 +15,12 @@ ssize_t fdStreamEncode(int fdIn, int fdOut, char* key, ssize_t keySize)
 
         keyOffset = xorEncode(buffer, readBufferSize, key, keySize, keyOffset);
 
-        errorCode = write(fdOut, buffer, readBufferSize);
-        if (errorCode != 0)
+        ssize_t writeBufferSize = write(fdOut, buffer, readBufferSize);
+        if (writeBufferSize != readBufferSize)
+        {
+            errorCode = 1;
             break;
+        }
     }
 
     return errorCode;
