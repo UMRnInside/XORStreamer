@@ -25,11 +25,12 @@ int main(int argc, char** argv)
             {"verbose", no_argument, &verboseFlag, 1},
             {"output-file", required_argument, 0, 'o'},
             {"buffer-size", required_argument, 0, 'b'},
+            {"key", required_argument, 0, 'k'},
             {0,0,0,0}
         };
 
         int optionIndex = 0;
-        c = getopt_long(argc, argv, "b:o:", longOptions, &optionIndex);
+        c = getopt_long(argc, argv, "b:o:k:", longOptions, &optionIndex);
 
         // The end of options
         if (c == -1) break;
@@ -47,6 +48,10 @@ int main(int argc, char** argv)
                     fprintf(stderr, "error: invalid buffer size : '%s', strtod() returned %d.\n", optarg, bufferSize);
                     return 1;
                 }
+                break;
+            case 'k':
+                key = (char*)malloc(strlen(optarg) * sizeof(char));
+                strcpy(key, optarg);
                 break;
             case '?':
                 // An error message is printed by getopt
