@@ -11,6 +11,6 @@
 #include <unistd.h>
 #include <string.h>
 
-ssize_t fdStreamEncode(int fdIn, int fdOut, char* key, ssize_t keySize);
+ssize_t fdStreamEncode(int fdIn, int fdOut, char* key, ssize_t keySize, char* buffer, ssize_t bufferSize);
 
 #endif /* _STREAM_H_ */
