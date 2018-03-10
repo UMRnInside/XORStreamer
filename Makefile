@@ -1,16 +1,11 @@
 CC=$(CROSS_COMPILE)gcc
 
-all: xor stream main
+all: xor.o stream.o main.o
 	$(CC) $(CFLAGS) xor.o stream.o main.o -o XORStreamer
 
-xor:
-	$(CC) $(CFLAGS) -c xor.c
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-stream:
-	$(CC) $(CFLAGS) -c stream.c
-
-main:
-	$(CC) $(CFLAGS) -c main.c
 
 clean:
 	rm *.o XORStreamer
