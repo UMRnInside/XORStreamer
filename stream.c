@@ -1,9 +1,13 @@
 #include "stream.h"
 #include "xor.h"
+#include "flags.h"
 
-ssize_t fdStreamEncode(int fdIn, int fdOut, char* key, ssize_t keySize, char* buffer, ssize_t bufferSize)
+static ssize_t keyOffset_l = 0;
+
+ssize_t fdStreamEncode(int fdIn, int fdOut, char* key, ssize_t keySize, char* buffer, ssize_t bufferSize, int flags)
 {
-    ssize_t keyOffset = 0;
+    if (flags & SENC_CLEAROFFSET) keyOffset_l = 0;
+    ssize_t keyOffset = (flags & SENC_FLUENT) ? keyOffset_l : 0;
     ssize_t errorCode = 0;
 
     while (1)
@@ -23,5 +27,7 @@ ssize_t fdStreamEncode(int fdIn, int fdOut, char* key, ssize_t keySize, char* bu
         }
     }
 
+    keyOffset_l = keyOffset;
     return errorCode;
 }
+

@@ -8,6 +8,7 @@
 #define DEFAULT_KEY "23333333"
 
 #include "stream.h"
+#include "flags.h"
 
 int fdIn = 0;
 int fdOut = 1;
@@ -86,7 +87,7 @@ int main(int argc, char** argv)
                 return 1;
             }
 
-            errorCode = fdStreamEncode(fdIn, fdOut, key, strlen(key), buffer, bufferSize);
+            errorCode = fdStreamEncode(fdIn, fdOut, key, strlen(key), buffer, bufferSize, SENC_FLUENT);
 
             close(fdIn);
 
@@ -95,7 +96,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        errorCode = fdStreamEncode(fdIn, fdOut, key, strlen(key), buffer, bufferSize);
+        errorCode = fdStreamEncode(fdIn, fdOut, key, strlen(key), buffer, bufferSize, SENC_FLUENT | SENC_CLEAROFFSET);
         close(fdIn);
     }
 
