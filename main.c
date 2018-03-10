@@ -21,6 +21,8 @@ int main(int argc, char** argv)
     char outputFileName[FILENAME_MAX];
 
     int c;
+    ssize_t errorCode;
+
     while (1)
     {
         static struct option longOptions[] = {
@@ -62,6 +64,8 @@ int main(int argc, char** argv)
         }
     }
 
+
+
     fdOut = open(outputFileName, O_CREAT|O_WRONLY);
     if (fdOut < 0)
     {
@@ -71,7 +75,31 @@ int main(int argc, char** argv)
 
     char* buffer = (char*)malloc(sizeof(char) * bufferSize);
 
-    ssize_t errorCode = fdStreamEncode(fdIn, fdOut, key, strlen(key), buffer, bufferSize);
+    if (optind < argc)
+    {
+        for (int i=optind; i<argc; i++)
+        {
+            fdIn = open(argv[i], O_RDONLY);
+            if (fdIn < 0)
+            {
+                fprintf(stderr, "error: cannot open input file %d! open() returned %d\n", i-optind, fdIn);
+                return 1;
+            }
+
+            errorCode = fdStreamEncode(fdIn, fdOut, key, strlen(key), buffer, bufferSize);
+
+            close(fdIn);
+
+            if (errorCode != 1) return (int)errorCode;
+        }
+    }
+    else
+    {
+        errorCode = fdStreamEncode(fdIn, fdOut, key, strlen(key), buffer, bufferSize);
+        close(fdIn);
+    }
+
+    close(fdOut);
     free(buffer);
     return (int)errorCode;
 }
