@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
+
 #include <getopt.h>
 
 #define DEFAULT_KEY "23333333"
@@ -60,6 +62,12 @@ int main(int argc, char** argv)
         }
     }
 
+    fdOut = open(outputFileName, O_CREAT|O_WRONLY);
+    if (fdOut < 0)
+    {
+        fprintf(stderr, "error: cannot open output file! open() returned %d\n", fdOut);
+        return 1;
+    }
 
     char* buffer = (char*)malloc(sizeof(char) * bufferSize);
 
